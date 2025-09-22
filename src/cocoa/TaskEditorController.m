@@ -33,7 +33,10 @@
 	NSWindow *sheet = [self window];
 
 	[sheet setAlphaValue:1];
-	[NSApp beginSheet:sheet modalForWindow:parentWindow modalDelegate:self didEndSelector:nil contextInfo:nil];
+	[parentWindow beginSheet:sheet completionHandler:^(NSModalResponse returnCode) {
+        // No-op: previous code did not use a completion callback.
+        // If needed later, handle returnCode here.
+    }];
 }
 
 
@@ -41,7 +44,10 @@
 {
 	NSWindow *sheet = [self window];
 	[sheet orderOut:nil];
-	[NSApp endSheet:sheet];
+    NSWindow *parent = [sheet sheetParent];
+    if (parent) {
+        [parent endSheet:sheet];
+    }
 }
 
 // ============================
@@ -53,10 +59,20 @@
     if (![self.task.name isEqualToString:self.taskName]) {
         // the name was changed
         if ([self.task.parentProject doesTaskNameExist:self.taskName]) {
-            NSRunAlertPanel(@"A Task with that name already exists", 
-                        @"Please choose a different name",
-                        @"OK", nil/*@"NO"*/, /*ThirdButtonHere:*/nil
-                        /*, args for a printf-style msg go here */);
+            // Use NSAlert instead of deprecated NSRunAlertPanel
+            NSAlert *alert = [[NSAlert alloc] init];
+            alert.messageText = @"A Task with that name already exists";
+            alert.informativeText = @"Please choose a different name";
+            [alert addButtonWithTitle:@"OK"];
+            
+            // Prefer showing as a sheet attached to our window (or its parent)
+            NSWindow *sheet = [self window];
+            NSWindow *parent = sheet.sheetParent ?: sheet;
+            [alert beginSheetModalForWindow:parent completionHandler:^(NSModalResponse returnCode) {
+                // No-op; user just acknowledges.
+            }];
+            // Do not apply changes if duplicate exists
+            return;
         }
     }
 	self.task.name = self.taskName;
@@ -76,8 +92,7 @@
 	if (name == _taskName) {
 		return;
 	}
-	[_taskName release];
-	_taskName = [name retain];
+	_taskName = name;
 }
 
 @end

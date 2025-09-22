@@ -19,6 +19,7 @@
 #import <Sparkle/Sparkle.h>
 #endif
 #import "TaskEditorController.h"
+#import "Foundation/NSKeyedArchiver.h"
 
 
 @interface MainController (PrivateMethods)
@@ -76,10 +77,10 @@
     _showTimeInMenuBar = NO;
 	timer = nil;
 	timeSinceSave = 0;
-    _autosaveCsv = YES;
+    _autosaveCsv = [NSNumber numberWithBool:YES];
     _lruTasks = [[NSMutableArray alloc] initWithCapacity:_maxLruSize+1];
-    [self setAutosaveCsvFilename:[@"~/times.csv" stringByExpandingTildeInPath]];
-    _csvSeparatorChar = [@";" retain];
+    [self setAutosaveCsvFilename:[NSURL URLWithString:[@"~/times.csv" stringByExpandingTildeInPath]]];
+    _csvSeparatorChar = @";";
 	_metaProject = [[TMetaProject alloc] init];
 	_metaTask = [[TMetaTask alloc] init];
     
@@ -99,13 +100,13 @@
 	[NSValueTransformer setValueTransformer:_intervalValueFormatter forName:@"TimeIntervalToStringFormatter"];
 	[NSValueTransformer setValueTransformer:_taskNameTransformer forName:@"TTaskNameTransformer"];
 	_selectedfilterDate = nil;
-    _startMenu = [[NSMenu alloc] initWithTitle:@"TimeTracker"];
+    _startMenu = [[NSMenu alloc] initWithTitle:NSLocalizedString(@"TimeTracker", @"Menu title for the status bar menu")];
     _startTaskMenuDelegate = [[StartTaskMenuDelegate alloc] initWithController:self];
-    [_startMenu setDelegate:_startTaskMenuDelegate];
-//	[_startMenu setTarget:self];
+    //[_startMenu setDelegate:_startTaskMenuDelegate];
+    //[_startMenu setTarget:self];
     [self loadData];
 
-    NSLog(@"Have MetaProject: %@, retainCount %d",_metaProject, [_metaProject retainCount]);
+    NSLog(@"Have MetaProject: %@", _metaProject);
 	return self;
 }
 
@@ -147,7 +148,7 @@
                                 [NSArray arrayWithObjects:generalPredicate, _extraFilterPredicate, nil]];
         }
         // now fill in the variables
-        _currentPredicate = [[TTParsedPredicate producePredicateFromTemplate:finalPredicateTemplate] retain];
+        _currentPredicate = [TTParsedPredicate producePredicateFromTemplate:finalPredicateTemplate];
 		NSString *name = self.selectedTask.name;
 		NSLog(@"filterPredicate: selTask %@", name);
 	}
@@ -157,7 +158,6 @@
 
 - (void) invalidateFilterPredicate
 {
-	[_currentPredicate release];
 	_currentPredicate = nil;
 	self.currentFilterCreationDate = nil;
 }
@@ -223,9 +223,9 @@
 }
 
 
-- (BOOL)validateMenuItem:(NSMenuItem *) anItem {
+/*- (BOOL)validateMenuItem:(NSMenuItem *) anItem {
 	return YES;
-}
+}*/
 
 - (void)addTaskToLruCache:(TTask*) task
 {
@@ -383,17 +383,52 @@
 	    
     if ([self dataFileExists]) {
 		NSString * path = [self pathForDataFile]; 
-		NSDictionary * rootObject; 
-		rootObject = [NSKeyedUnarchiver unarchiveObjectWithFile:path]; 
+		NSDictionary * rootObject = nil;
+
+        // Read file data and unarchive the root dictionary using non-deprecated API
+        NSData *fileData = [NSData dataWithContentsOfFile:path];
+        if (fileData != nil) {
+            NSError *unarchiveError = nil;
+            NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingFromData:fileData error:&unarchiveError];
+            if (unarchiver != nil) {
+                unarchiver.requiresSecureCoding = NO;
+                id obj = [unarchiver decodeTopLevelObjectForKey:NSKeyedArchiveRootObjectKey error:&unarchiveError];
+                [unarchiver finishDecoding];
+                if ([obj isKindOfClass:[NSDictionary class]]) {
+                    rootObject = (NSDictionary *)obj;
+                } else {
+                    NSLog(@"Failed to unarchive root dictionary: %@", unarchiveError);
+                }
+            } else {
+                NSLog(@"Failed to create unarchiver for file %@: %@", path, unarchiveError);
+            }
+        } else {
+            NSLog(@"Failed to read data file at path: %@", path);
+        }
+
 		theData = [rootObject valueForKey:@"ProjectTimes"];
 		if (theData != nil) {
-			projects = (NSMutableArray *)[[NSMutableArray arrayWithArray: [NSKeyedUnarchiver unarchiveObjectWithData:theData]] retain];
+            // Unarchive projects array (contains custom NSCoding classes), keep requiresSecureCoding = NO
+            NSError *projError = nil;
+            NSKeyedUnarchiver *projectsUnarchiver = [[NSKeyedUnarchiver alloc] initForReadingFromData:theData error:&projError];
+            if (projectsUnarchiver != nil) {
+                projectsUnarchiver.requiresSecureCoding = NO;
+                id arr = [projectsUnarchiver decodeTopLevelObjectForKey:NSKeyedArchiveRootObjectKey error:&projError];
+                [projectsUnarchiver finishDecoding];
+                if ([arr isKindOfClass:[NSArray class]]) {
+                    projects = (NSMutableArray *)[NSMutableArray arrayWithArray:(NSArray *)arr];
+                } else {
+                    NSLog(@"Failed to unarchive projects array: %@", projError);
+                }
+            } else {
+                NSLog(@"Failed to create unarchiver for projects: %@", projError);
+            }
 		}
         NSString* autosave = [rootObject valueForKey:@"autosave"];
         if ([@"NO" isEqualToString:autosave]) {
-            _autosaveCsv = NO;
+            _autosaveCsv = [NSNumber numberWithBool:NO];
         } else {
-            _autosaveCsv = YES;
+            _autosaveCsv = [NSNumber numberWithBool:YES];
         }
         NSString* showTime = [rootObject valueForKey:@"showTimeInMenuBar"];
         if ([@"NO" isEqualToString:showTime]) {
@@ -445,14 +480,26 @@
 		defaults = [NSUserDefaults standardUserDefaults];
         
 		theData=[[NSUserDefaults standardUserDefaults] dataForKey:@"ProjectTimes"];
-		if (theData != nil) {
-			projects = (NSMutableArray *)[[NSMutableArray arrayWithArray: [NSUnarchiver unarchiveObjectWithData:theData]] retain];
-		}
+        if (theData != nil) {
+            NSError *projError = nil;
+            NSKeyedUnarchiver *projectsUnarchiver = [[NSKeyedUnarchiver alloc] initForReadingFromData:theData error:&projError];
+            if (projectsUnarchiver != nil) {
+                projectsUnarchiver.requiresSecureCoding = NO;
+                id arr = [projectsUnarchiver decodeTopLevelObjectForKey:NSKeyedArchiveRootObjectKey error:&projError];
+                [projectsUnarchiver finishDecoding];
+                if ([arr isKindOfClass:[NSArray class]]) {
+                    projects = (NSMutableArray *)[NSMutableArray arrayWithArray:(NSArray *)arr];
+                } else {
+                    NSLog(@"Failed to unarchive projects array from defaults: %@", projError);
+                }
+            } else {
+                NSLog(@"Failed to create unarchiver for defaults projects: %@", projError);
+            }
+        }
        self.updateURL = URL_APPCAST_STABLE;
 	}
     
 	if (projects != nil) {
-		[_projects release];
 		// projects is already retained
 		_projects = projects;
 		[_metaProject setProjects:_projects];
@@ -500,11 +547,13 @@
 
 - (void)awakeFromNib
 {
-	statusItem = [[[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength] retain];
+	statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength];
 	
     //[statusItem ]
-	[statusItem setTarget: self];
-	[statusItem setAction: @selector (clickedStartStopTimer:)];
+	// Use the status item's button for target/action (avoids deprecation)
+	NSStatusBarButton *button = statusItem.button;
+	button.target = self;
+	button.action = @selector(clickedStartStopTimer:);
     [statusItem setLength:NSVariableStatusItemLength];
 	statusItem.menu = _startMenu;
 
@@ -515,8 +564,8 @@
 	stopItemImage = [[NSImage alloc] initWithContentsOfFile:[bundle pathForResource:@"stopitem" ofType:@"png"]];
 	stopItemHighlightImage = [[NSImage alloc] initWithContentsOfFile:[bundle pathForResource:@"stopitem_hl" ofType:@"png"]];
 
-	playToolImage = [[NSImage alloc] initWithContentsOfFile:[bundle pathForResource:@"playtool" ofType:@"png"]];
-	stopToolImage = [[NSImage alloc] initWithContentsOfFile:[bundle pathForResource:@"stoptool" ofType:@"png"]];
+	playToolImage = [[NSImage alloc] initWithContentsOfFile:[bundle pathForResource:@"playtool" ofType:@"tiff"]];
+	stopToolImage = [[NSImage alloc] initWithContentsOfFile:[bundle pathForResource:@"stoptool" ofType:@"tiff"]];
 	addTaskToolImage = [[NSImage alloc] initWithContentsOfFile:[bundle pathForResource:@"addtasktool" ofType:@"png"]];
 	addProjectToolImage = [[NSImage alloc] initWithContentsOfFile:[bundle pathForResource:@"addprojecttool" ofType:@"png"]];
 	
@@ -527,8 +576,8 @@
 	weekToolImageUnsel = [[NSImage alloc] initWithContentsOfFile:[bundle pathForResource:@"weekofftool" ofType:@"png"]];
 	monthToolImageUnsel = [[NSImage alloc] initWithContentsOfFile:[bundle pathForResource:@"monthofftool" ofType:@"png"]];
 	pickDateToolImage = [[NSImage alloc] initWithContentsOfFile:[bundle pathForResource:@"pickdatetool" ofType:@"png"]];
-	[statusItem setToolTip:@"Time Tracker"];
-	[statusItem setHighlightMode:NO];
+    button.toolTip = @"Time Tracker";
+    button.cell.highlighted = NO;
 
 	[self updateStartStopState];
 	[self updateProminentDisplay];
@@ -536,13 +585,13 @@
     [self initializeTableViews];
 	
 	NSMutableArray *descriptors = [NSMutableArray array];
-	[descriptors addObject:[[[NSSortDescriptor alloc] initWithKey:@"startTime" ascending:YES] autorelease]];
-	[descriptors addObject:[[[NSSortDescriptor alloc] initWithKey:@"parentTask.name" ascending:YES] autorelease]];
+	[descriptors addObject:[[NSSortDescriptor alloc] initWithKey:@"startTime" ascending:YES]];
+	[descriptors addObject:[[NSSortDescriptor alloc] initWithKey:@"parentTask.name" ascending:YES]];
 	[workPeriodController setSortDescriptors:descriptors];
     
     NSArray *projectSortDescriptors = 
         [NSArray arrayWithObjects:
-         [[[NSSortDescriptor alloc] initWithKey:@"manual" ascending:NO] autorelease],            [[[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES] autorelease], 
+         [[NSSortDescriptor alloc] initWithKey:@"manual" ascending:NO], [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES],
          nil];
     [tvProjects setSortDescriptors:projectSortDescriptors];
     //[projectSortDescriptors release];
@@ -579,34 +628,15 @@
 
 - (IBAction)okClicked:(id) sender
 {
-	[NSApp endSheet:panelEditWorkPeriod returnCode:NSOKButton];
+    [NSApp endSheet:panelEditWorkPeriod returnCode:NSModalResponseOK];
 }
 
 - (IBAction)cancelClicked:(id) sender
 {
-	[NSApp endSheet:panelEditWorkPeriod returnCode:NSCancelButton];
+    [NSApp endSheet:panelEditWorkPeriod returnCode:NSModalResponseCancel];
 }
 
-- (void)sheetDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
-{
-	if (sheet == panelPickFilterDate) {
-		if (returnCode == NSOKButton) {			
-			[_tbPickDateItem setLabel:[_dateFormatter stringFromDate:_selectedfilterDate]];
-		} else {
-			[self setFilterMode: FILTER_MODE_NONE];
-			[_tbPickDateItem setLabel:@"Pick Date"];
-		}
-
-		[self refreshCurrentFilterPredicate];
-	} else {
-		if (returnCode == NSOKButton) {
-			[self clickedChangeWorkPeriod:contextInfo];
-		}
-	}
-	// hide the window
-	[sheet orderOut:nil];
-}
-
+// Removed deprecated sheetDidEnd:returnCode:contextInfo: and replaced with per-sheet completion handlers.
 
 - (void)notificationDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
 {
@@ -624,9 +654,20 @@
 	[self provideTasksForEditWpDialog:wp.parentTask.parentProject];
 	[_taskPopupButton selectItemWithTitle:wp.parentTask.name];
     
-	[NSApp beginSheet:panelEditWorkPeriod modalForWindow:mainWindow modalDelegate:self 
-       didEndSelector:@selector(sheetDidEnd:returnCode:contextInfo:) contextInfo:wp];
-    
+    // Use NSWindow beginSheet:completionHandler: (modern API)
+    __weak typeof(self) weakSelf = self;
+    [mainWindow beginSheet:panelEditWorkPeriod completionHandler:^(NSModalResponse returnCode) {
+        __strong typeof(self) strongSelf = weakSelf;
+        if (!strongSelf) { return; }
+        if (returnCode == NSModalResponseOK) {
+            // mimic previous behavior: pass wp as sender
+            [strongSelf clickedChangeWorkPeriod:(id)wp];
+        } else {
+            // nothing to do on cancel
+        }
+        // hide the window (like previous sheetDidEnd)
+        [self->panelEditWorkPeriod orderOut:nil];
+    }];
 }
 - (void) doubleClickWorkPeriod: (id) sender
 {
@@ -679,7 +720,7 @@
     }
 	[wp setStartTime: [dtpEditWorkPeriodStartTime dateValue]];
 	[wp setEndTime: [dtpEditWorkPeriodEndTime dateValue]];
-	[wp setComment: [[[NSAttributedString alloc] initWithString:[dtpEditWorkPeriodComment string]] autorelease]];
+	[wp setComment: [[NSAttributedString alloc] initWithString:[dtpEditWorkPeriodComment string]]];
 	
 	BOOL doRefilter = NO;
 	// move the workperiod to a different task / project
@@ -717,8 +758,16 @@
 	// prevent someone from starting a new task while the popup is visible.
 	statusItem.menu = nil;
 	NSLog(@"Showing idle notification for mainWindow %@", mainWindow);
-    [NSApp beginSheet:panelIdleNotification modalForWindow:mainWindow modalDelegate:self 
-       didEndSelector:@selector(notificationDidEnd:returnCode:contextInfo:) contextInfo:nil];
+    // Modern beginSheet with completion handler
+    __weak typeof(self) weakSelf = self;
+    [mainWindow beginSheet:panelIdleNotification completionHandler:^(NSModalResponse returnCode) {
+        __strong typeof(self) strongSelf = weakSelf;
+        if (!strongSelf) { return; }
+        // replicate notificationDidEnd behavior
+        [strongSelf refreshCurrentFilterPredicate];
+        [self->panelIdleNotification orderOut:nil];
+        strongSelf->statusItem.menu = strongSelf->_startMenu;
+    }];
 /*
 		[NSApp activateIgnoringOtherApps: YES];
 		[NSApp runModalForWindow: panelIdleNotification];
@@ -744,8 +793,7 @@
         } else {
             [timer setFireDate: [NSDate distantFuture]];
             // time jumped by 60 seconds, probably the computer was on standby
-            [_lastNonIdleTime release];
-            _lastNonIdleTime = [lastEndTime retain];
+            _lastNonIdleTime = lastEndTime;
             [self showIdleNotification];
             return;
         }
@@ -758,8 +806,7 @@
 	//[tvWorkPeriods reloadData];
 	int idleTime = [self idleTime];
 	if (idleTime == 0) {
-		[_lastNonIdleTime release];
-		_lastNonIdleTime = [[NSDate date] retain];
+		_lastNonIdleTime = [NSDate date];
 	}
 	
 	if (idleTime > _idleTimeoutSeconds || _showIdleNotification) {
@@ -793,9 +840,9 @@
 	if (self.currentFilterCreationDate != nil) {
 		// make sure that when we reactivate the app we check if the day filter is out of date
 		NSCalendar *cur = [NSCalendar currentCalendar];
-		NSDateComponents *comps = [cur components:NSWeekdayCalendarUnit fromDate:self.currentFilterCreationDate toDate:[NSDate date] options:0];
+        NSDateComponents *comps = [cur components:NSCalendarUnitWeekday fromDate:self.currentFilterCreationDate toDate:[NSDate date] options:0];
 		if ([comps weekdayOrdinal] > 0) {
-			NSLog(@"need to refresh filter, its %d days old", [comps day]);
+			NSLog(@"need to refresh filter, its %ld days old", (long)[comps day]);
 			// ok our current filter is out of date, so refresh it
 			[self refreshCurrentFilterPredicate];
 		} else {
@@ -817,8 +864,9 @@
 	NSFileManager *fileManager = [NSFileManager defaultManager]; 
 	NSString *folder = @"~/Library/Application Support/TimeTracker/"; 
 	folder = [folder stringByExpandingTildeInPath]; 
-	if ([fileManager fileExistsAtPath: folder] == NO) { 
-		[fileManager createDirectoryAtPath: folder attributes: nil]; 
+	if ([fileManager fileExistsAtPath: folder] == NO) {
+        NSError *error;
+        [fileManager createDirectoryAtPath:folder withIntermediateDirectories:YES attributes:nil error:&error];
 	} 
 	NSString *fileName = @"data.plist"; 
 	return [folder stringByAppendingPathComponent: fileName]; 
@@ -876,8 +924,14 @@
 
 - (void)saveData
 {
-	NSData *theData=[NSKeyedArchiver archivedDataWithRootObject:_projects];
-	NSString * path = [self pathForDataFile]; 
+    
+    NSError *archiveError = nil;
+    NSData *theData = [NSKeyedArchiver archivedDataWithRootObject:_projects requiringSecureCoding:NO error:&archiveError];
+    if (theData == nil) {
+        NSLog(@"Failed to archive projects: %@", archiveError);
+        theData = [NSData data];
+    }
+	NSString * path = [self pathForDataFile];
 	NSMutableDictionary * rootObject; 
 	rootObject = [NSMutableDictionary dictionary]; 
 
@@ -893,7 +947,6 @@
         ptrData++;
     }
     [rootObject setValue:lruData forKey:@"lruIndexes"];
-    [lruData release];
     lruData = nil;
     
     
@@ -903,7 +956,7 @@
     [rootObject setValue:_updateURL forKey:@"updateURL"];
     [rootObject setValue:[NSString stringWithFormat:@"%d", _maxLruSize] forKey:@"lruEntryCount"];
     [rootObject setValue:[NSString stringWithFormat:@"%d", _idleTimeoutSeconds] forKey:@"idleTimeout"];
-    if (_autosaveCsv) {
+    if ([_autosaveCsv boolValue]) {
         [rootObject setValue:@"YES" forKey:@"autosave"];
     } else {
         [rootObject setValue:@"NO" forKey:@"autosave"];        
@@ -924,9 +977,9 @@
 	
 	timeSinceSave = 0;
 	
-    if (_autosaveCsv && _autosaveCsvFilename != nil) {
+    if ([_autosaveCsv boolValue] && _autosaveCsvFilename != nil) {
         NSString *data = [self serializeData];
-        [data writeToFile:_autosaveCsvFilename 
+        [data writeToFile:[_autosaveCsvFilename absoluteString]
                atomically:YES 
                  encoding:NSISOLatin1StringEncoding 
                     error:NULL];
@@ -971,12 +1024,11 @@
     [sp setTitle:@"Export"];
     [sp setNameFieldLabel:@"Export to:"];
     [sp setPrompt:@"Export"];
+    [sp setAllowedContentTypes:[NSArray arrayWithObject:@"csv"]];
     
-    [sp setRequiredFileType:@"csv"];
+    savePanelResult = [sp runModal];
     
-    savePanelResult = [sp runModalForDirectory:nil file:@"Time Tracker Data.csv"];
-    
-    if (savePanelResult == NSOKButton) {
+    if (savePanelResult == NSModalResponseOK) {
         NSMenuItem *selectedRange = [rangeButton selectedItem];
         
         NSString *data = nil;
@@ -987,7 +1039,7 @@
             data = [self serializeCurrentFilter];
         }
 		NSError *error;
-        [data writeToFile:[sp filename] 
+        [data writeToFile:[[sp URL] absoluteString]
                atomically:YES
                  encoding:NSUTF8StringEncoding 
                     error:&error];
@@ -1026,7 +1078,6 @@
 {
 	TProject *proj = [TProject new];
 	[_projects addObject: proj];
-    [proj release];
 	[tvProjects reloadData];
 	int index = [_projects count];
 	[tvProjects selectRowIndexes:[NSIndexSet indexSetWithIndex:index] byExtendingSelection:NO];
@@ -1047,7 +1098,7 @@
     if (_filterMode == FILTER_MODE_PREDICATE) {
         return nil;
     }
-	NSDateComponents *comps = [[[NSDateComponents alloc] init] autorelease];
+	NSDateComponents *comps = [[NSDateComponents alloc] init];
 	switch (_filterMode) {
 		case FILTER_MODE_DAY:			
 			[comps setDay:1];
@@ -1059,7 +1110,7 @@
 			[comps setMonth:1];
 			break;
 	}
-	_filterEndDate = [[[NSCalendar currentCalendar] dateByAddingComponents:comps toDate:_filterStartDate options:0] retain];
+	_filterEndDate = [[NSCalendar currentCalendar] dateByAddingComponents:comps toDate:_filterStartDate options:0];
 	return _filterEndDate;
 }
 
@@ -1069,11 +1120,10 @@
 	if (_filterMode == FILTER_MODE_PREDICATE || _selectedfilterDate == nil) {
 		return nil;
 	}
-	[_filterStartDate release];
 	_filterStartDate = nil;
 	NSCalendar *cal = [NSCalendar currentCalendar];
 	NSDateComponents *comps = [cal components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit fromDate:_selectedfilterDate];
-	_filterStartDate = [[cal dateFromComponents:comps] retain];
+	_filterStartDate = [cal dateFromComponents:comps];
 	return _filterStartDate;
 }
 
@@ -1103,8 +1153,7 @@
 
 -(void) setExtraFilterPredicate:(NSPredicate *)predicate {
     if (_extraFilterPredicate != predicate) {
-        [_extraFilterPredicate release];
-        _extraFilterPredicate = [predicate retain];
+        _extraFilterPredicate = predicate;
         if (predicate != nil) {
             _filterMode = FILTER_MODE_PREDICATE;
         } else {
@@ -1134,7 +1183,6 @@
     NSString *taskName = [project findUniqueTaskNameBasedOn:task.name];
     task.name = taskName;
 	[project addTask: task];
-    [task release];
     
     [self selectTask:task project:project];
     return task;
@@ -1175,11 +1223,10 @@
  * is selected. 
  */
 - (void) updateTaskFilterCache {
-	[_filteredTasks release];
 	_filteredTasks = nil;
 	
 	if (_filterMode != FILTER_MODE_NONE) {
-		_filteredTasks = [[_selProject matchingTasks:[self filterPredicate]] retain];
+		_filteredTasks = [_selProject matchingTasks:[self filterPredicate]];
 	} 
 	self.currentTasks = [self determineCurrentTasks];
 	[self applyFilterToCurrentTasks];
@@ -1396,7 +1443,7 @@
   /* Release our resources */
   IOObjectRelease(curObj);
   IOObjectRelease(iter);
-  CFRelease((CFTypeRef)properties);
+  //CFRelease((CFTypeRef)properties);
 
   return res;
 }
@@ -1571,7 +1618,6 @@
 //	[NSApp stopModal];
 	// assert _lastNonIdleTime != nil
 	[self stopTimer:_lastNonIdleTime];
-	[_lastNonIdleTime release];
 	_lastNonIdleTime = nil;
     [NSApp endSheet:panelIdleNotification returnCode:NSCancelButton];
 
@@ -1579,14 +1625,14 @@
 
 -(BOOL) autosaveCsv 
 {
-    return _autosaveCsv;
+    return [_autosaveCsv boolValue];
 }
 -(void) setAutosaveCsv:(BOOL)autosave 
 {
-    _autosaveCsv = autosave;
+    _autosaveCsv = [NSNumber numberWithBool:autosave];
 }
 
--(void) setDecimalHours:(BOOL)decimal 
+-(void) setDecimalHours:(BOOL)decimal
 {
     _decimalHours = decimal;
     _intervalValueFormatter.decimalMode = decimal;
@@ -1597,23 +1643,21 @@
 
 -(NSString*) autosaveCsvFilename 
 {
-    return _autosaveCsvFilename;
+    return [_autosaveCsvFilename absoluteString];
 }
 
--(void) setAutosaveCsvFilename:(NSString*)filename
+-(void) setAutosaveCsvFilename:(NSURL*)filename
 {
     if (_autosaveCsvFilename != filename) {
-        [_autosaveCsvFilename release];
         _autosaveCsvFilename = nil;
-        _autosaveCsvFilename = [filename retain];
+        _autosaveCsvFilename = filename;
     }
 }
 
 -(void) setUpdateURL:(NSString *)updateURL {
     if (_updateURL != updateURL) {
-        [_updateURL release];
         _updateURL = nil;
-        _updateURL = [updateURL retain];
+        _updateURL = updateURL;
     }
 #ifndef APPSTORE
     [[SUUpdater sharedUpdater] setFeedURL:[NSURL URLWithString:updateURL]];
@@ -1627,9 +1671,8 @@
 
 -(void) setCsvSeparatorChar:(NSString*) separator
 {
-    [_csvSeparatorChar release];
     _csvSeparatorChar = nil;
-    _csvSeparatorChar = [separator retain];
+    _csvSeparatorChar = separator;
 }
 
 -(NSArray*)lruTasks
@@ -1734,7 +1777,6 @@
 	NSMutableArray *newTasks = [[NSMutableArray alloc] initWithCapacity:[tasks count] + 1];
 	[newTasks addObject:_metaTask];
 	[newTasks addObjectsFromArray:tasks];
-	[_currentTasks release];
 	_currentTasks = newTasks;
 }
 
@@ -1948,10 +1990,10 @@
 
 - (void)tableView:(NSTableView *)aTableView willDisplayCell:(id)aCell forTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex {
 	if (_normalCol == nil) {
-		_normalCol = [[aCell textColor] retain];
-		_highlightCol = [[NSColor colorWithCalibratedRed:1.0f green:0.2f blue:0.2f alpha:1.0f] retain];//[[_normalCol highlightWithLevel:0.5] retain];
-        _highlightBgCol = [[NSColor colorWithCalibratedRed:1.0f green:1.0f blue:0.0f alpha:1.0f] retain];//[[_normalCol highlightWithLevel:0.5] retain];
-        _greyCol = [[NSColor colorWithCalibratedRed:0.4f green:0.4f blue:0.4f alpha:1.0f] retain];
+		_normalCol = [aCell textColor];
+		_highlightCol = [NSColor colorWithCalibratedRed:1.0f green:0.2f blue:0.2f alpha:1.0f];//[[_normalCol highlightWithLevel:0.5] retain];
+        _highlightBgCol = [NSColor colorWithCalibratedRed:1.0f green:1.0f blue:0.0f alpha:1.0f];//[[_normalCol highlightWithLevel:0.5] retain];
+        _greyCol = [NSColor colorWithCalibratedRed:0.4f green:0.4f blue:0.4f alpha:1.0f];
 	}
 	if (aTableView == tvWorkPeriods) {
         TWorkPeriod *wp = [[workPeriodController arrangedObjects] objectAtIndex:rowIndex];
@@ -1980,7 +2022,6 @@
 	if ([notification object] == tvProjects) {
 		// Update the new selection
 		// first remove the cached tasks
-		[_filteredTasks release];
 		_filteredTasks = nil;
         
 		_taskNameTransformer.showProjectName = NO;
@@ -2052,13 +2093,6 @@
 
 -(void) dealloc {
 	self.currentFilterCreationDate = nil;
-    [_highlightCol release];
-    [_normalCol release];
-    [_highlightBgCol release];
-    [_greyCol release];
-	[_startTaskMenuDelegate release];
-    [_taskNameTransformer release];
-    [super dealloc];
 }
 
 @end

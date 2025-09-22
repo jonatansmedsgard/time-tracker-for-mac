@@ -31,6 +31,7 @@
 
 - (id) init
 {
+    self = [super init];
 	_startTime = nil;
 	_endTime = nil;
 	_comment = [[NSAttributedString alloc] init];
@@ -48,10 +49,10 @@
         id attribComment = [coder decodeObjectForKey:ENCODER_KEY_COMMENT];
 		
         if ([attribComment isKindOfClass:[NSString class]]) {
-			attribComment = [[[NSAttributedString alloc] initWithString:attribComment] autorelease];
+			attribComment = [[NSAttributedString alloc] initWithString:attribComment];
         }
         if (attribComment == nil) {
-			attribComment = [[[NSAttributedString alloc] initWithString:[coder decodeObjectForKey:@"Comment"]] autorelease];
+			attribComment = [[NSAttributedString alloc] initWithString:[coder decodeObjectForKey:@"Comment"]];
         }
         [self setComment:attribComment];
     } else {
@@ -68,9 +69,8 @@
 - (void) setStartTime: (NSDate *) startTime
 {
     if (startTime != _startTime) {
-        [_startTime release];
         _startTime = nil;
-        _startTime = [startTime retain];
+        _startTime = startTime;
 		// reset the start date otherwise our filter is all wrong
 		self.date = nil;
         [self updateTotalTime];        
@@ -83,9 +83,8 @@
 		// determine difference
 		NSTimeInterval diffInSeconds = [endTime timeIntervalSinceDate:_startTime];
 		NSInteger totalDiff = diffInSeconds - _totalTime;
-        [_endTime release];
         _endTime = nil;
-        _endTime = [endTime retain];
+        _endTime = endTime;
 		if (_totalTime > 0 && totalDiff < 5.0) {
 			self.totalTime = _totalTime + totalDiff;
 			[_parent updateTotalBySeconds:diffInSeconds sender:self];
@@ -142,9 +141,11 @@
     int hours = _totalTime / 3600;
     int minutes = _totalTime % 3600 / 60;
     int seconds = _totalTime - hours * 3600 - minutes * 60;// % 60;
-	NSDateFormatter *formatter = [[[NSDateFormatter alloc] initWithDateFormat:@"%Y-%m-%d %H:%M:%S" allowNaturalLanguage:NO]  autorelease];
-	NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] initWithDateFormat:@"%Y-%m-%d" allowNaturalLanguage:NO]  autorelease];
-	NSString* result = [NSString stringWithFormat:@"%@%@\"%@\"%@\"%@\"%@\"%@\"%@\"%02d:%02d:%02d\"%@\"%@\"\n", prefix, sep, 
+	NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"%Y-%m-%d %H:%M:%S";
+	NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"%Y-%m-%d";
+	NSString* result = [NSString stringWithFormat:@"%@%@\"%@\"%@\"%@\"%@\"%@\"%@\"%02d:%02d:%02d\"%@\"%@\"\n", prefix, sep,
                         [dateFormatter stringFromDate:_startTime], sep,
                         [formatter stringFromDate:_startTime], sep, [formatter stringFromDate:_endTime], sep,
                         hours, minutes, seconds, sep, [self strComment]];
@@ -153,7 +154,7 @@
 
 -(NSInteger) weekday {
     NSCalendar *cal = [NSCalendar currentCalendar];
-    NSDateComponents *comp = [cal components:(NSWeekdayCalendarUnit | NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit) fromDate:_startTime];
+    NSDateComponents *comp = [cal components:(NSCalendarUnitWeekday | NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear) fromDate:_startTime];
     NSInteger result = [comp weekday];
     return result;
 }
@@ -162,7 +163,7 @@
 -(NSInteger) daysSinceDate:(NSDate*)date {
     TTTimeProvider *provider = [TTTimeProvider instance];
     NSDate* today = provider.todayStartTime;
-    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSDayCalendarUnit
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay
                                                                    fromDate:date toDate:today options:0];
     return components.day;    
 }
@@ -170,15 +171,15 @@
 -(NSInteger) weeksSinceDate:(NSDate*)date {
     TTTimeProvider *provider = [TTTimeProvider instance];
     NSDate* today = provider.todayStartTime;
-    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSWeekCalendarUnit
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitWeekOfYear
                                                                        fromDate:date toDate:today options:0];
-    return components.week;
+    return components.weekOfYear;
 }
 
 -(NSInteger) monthsSinceDate:(NSDate*)date {
     TTTimeProvider *provider = [TTTimeProvider instance];
     NSDate* today = provider.todayStartTime;
-    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSMonthCalendarUnit
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitMonth
                                                                    fromDate:date toDate:today options:0];
     return components.month;
 }

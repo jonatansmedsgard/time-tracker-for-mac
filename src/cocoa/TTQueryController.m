@@ -12,9 +12,7 @@
 @implementation TTQueryController
 
 -(id) init {    
-    [super init];
-    
-    
+    self = [super init];
     return self;
 }
 
@@ -32,40 +30,32 @@
 
     SearchQuery *query = [[SearchQuery alloc] initWithTitle:@"None" predicate:nil];
     [iSearchQueries addObject:query];
-    [query release];
 
 	NSPredicate *lastMonthPred = [provider predicateWithSingleMonthFromToday:1];
     query = [[SearchQuery alloc] initWithTitle:@"Last month" predicate:lastMonthPred];
     [iSearchQueries addObject:query];
-    [query release];
     
     query = [[SearchQuery alloc] initWithTitle:@"This month" predicate:[provider predicateWithSingleMonthFromToday:0]];
     [iSearchQueries addObject:query];
-    [query release];
 	
     NSPredicate *lastWeekPred = [provider predicateWithSingleWeekFromToday:1];
     query = [[SearchQuery alloc] initWithTitle:@"Last week" predicate:lastWeekPred];
     [iSearchQueries addObject:query];
-    [query release];
     
     query = [[SearchQuery alloc] initWithTitle:@"This week" predicate:[provider predicateWithSingleWeekFromToday:0]];
     [iSearchQueries addObject:query];
-    [query release];
     
     query = [[SearchQuery alloc] initWithTitle:@"Yesterday" predicate:[provider predicateWithSingleDayFromToday:1]];
     [iSearchQueries addObject:query];
-    [query release];
     
     query = [[SearchQuery alloc] initWithTitle:@"Today" predicate:[provider predicateWithSingleDayFromToday:0]];
     [iSearchQueries addObject:query];
-    [query release];
 
     // Custom
     NSPredicate *mondayPred = [NSPredicate predicateWithFormat:@"weekday == 2"];
     NSPredicate *pred = [NSCompoundPredicate andPredicateWithSubpredicates:[NSArray arrayWithObjects:lastWeekPred, mondayPred, nil]];
     query = [[SearchQuery alloc] initWithTitle:@"Custom..." predicate:pred];
     [iSearchQueries addObject:query];
-    [query release];
     
     [_tableView reloadData];
 }

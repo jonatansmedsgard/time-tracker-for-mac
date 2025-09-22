@@ -1,6 +1,7 @@
 #import "PreferencesController.h"
 
 #import "MainController.h"
+#import <UniformTypeIdentifiers/UniformTypeIdentifiers.h>
 
 @implementation PreferencesController
 - (void)windowWillClose:(NSNotification *)notification
@@ -20,7 +21,7 @@
 
 - (IBAction) pickOutputFileClicked:(id) sender {
     NSSavePanel *sp;
-    int savePanelResult;
+    NSInteger savePanelResult;
     
     sp = [NSSavePanel savePanel];
     
@@ -28,12 +29,13 @@
     [sp setNameFieldLabel:@"Filename:"];
     [sp setPrompt:@"Save"];
     
-    [sp setRequiredFileType:@"csv"];
+    UTType *type = [UTType typeWithFilenameExtension:@"csv"];
+    [sp setAllowedContentTypes:@[type]];
     
-    savePanelResult = [sp runModalForDirectory:nil file:@"Time Tracker Data.csv"];
+    savePanelResult = [sp runModal];
     
-    if (savePanelResult == NSOKButton) {
-        [_mainController setAutosaveCsvFilename:[sp filename]];
+    if (savePanelResult == NSModalResponseOK) {
+        [_mainController setAutosaveCsvFilename:[sp URL]];
     }
 }
 @end

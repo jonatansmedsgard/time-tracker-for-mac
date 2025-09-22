@@ -6,7 +6,6 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <BWToolkitFramework/BWToolkitFramework.h>
 #import "TTask.h"
 
 @interface TaskEditorController : NSWindowController {

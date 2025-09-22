@@ -125,10 +125,6 @@
     [popup addItemWithTitle:@"years ago"];
     [popup sizeToFit];
     NSArray *result = [NSArray arrayWithObjects:label, qualifier, field, popup, nil];
-    [label release];
-    [qualifier release];
-    [field release];
-    [popup release];
     self._templateViews = result;
     return result;
 }
@@ -205,7 +201,7 @@
             break;
             
         default:
-            NSLog(@"Unexpected comparator: @%", predicate);
+            NSLog(@"Unexpected comparator: %@", predicate);
             break;
     }
     
@@ -219,6 +215,5 @@
 
 -(void) dealloc {
     self._templateViews = nil;
-    [super dealloc];
 }
 @end

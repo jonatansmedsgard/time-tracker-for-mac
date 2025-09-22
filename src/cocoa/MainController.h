@@ -123,8 +123,8 @@
 	int _filterMode;
 
     // Preferences
-  	IBOutlet BOOL _autosaveCsv;
-   	IBOutlet NSString *_autosaveCsvFilename;
+  	IBOutlet NSNumber *_autosaveCsv;
+   	IBOutlet NSURL *_autosaveCsvFilename;
    	IBOutlet NSString *_csvSeparatorChar;
     IBOutlet NSString *_updateURL;
     int _maxLruSize;
@@ -177,7 +177,6 @@
 
 - (void) updateStartStopState;
 - (void) updateProminentDisplay;
-- (void) reloadWorkPeriods;
 - (NSString *) pathForDataFile;
 - (bool) dataFileExists;
 - (void) validateToolbarFilterItems;
@@ -196,7 +195,7 @@
 -(void) setAutosaveCsv:(BOOL)autosave;
 
 -(NSString*) autosaveCsvFilename;
--(void) setAutosaveCsvFilename:(NSString*)filename;
+-(void) setAutosaveCsvFilename:(NSURL*)filename;
 
 -(NSString*) csvSeparatorChar;
 -(void) setCsvSeparatorChar:(NSString*) separator;
@@ -218,7 +217,7 @@
 @property(readonly) BOOL timerRunning;
 @property(retain, nonatomic) NSPredicate* extraFilterPredicate;
 @property(retain, nonatomic) NSString *updateURL;
-@property BOOL decimalHours;
+@property(nonatomic) BOOL decimalHours;
 @property(retain, nonatomic) id<ITask> selectedTask;
 @property(retain, nonatomic) id<IProject> selectedProject;
 @property(retain, nonatomic) NSArray* currentTasks;

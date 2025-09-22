@@ -21,7 +21,7 @@
     }
     NSInteger editorHeight = [_editor numberOfRows] * [_editor rowHeight];
     
-    NSLog(@"Have notification height: %d",editorHeight);
+    NSLog(@"Have notification height: %ld",(long)editorHeight);
     NSRect frame;
     
     // make sure the editor is on the bottom of the splitview
@@ -41,7 +41,7 @@
     [_editor addRow:self];
     [_editor addRow:self];
 
-    _container = [[[_editor enclosingScrollView] superview] retain]; 
+    _container = [[_editor enclosingScrollView] superview];
     // cause a layout
     [self updateEditorFrame];
 }
@@ -94,7 +94,7 @@
     
     // check NSApp currentEvent for the return key
     NSEvent* event = [NSApp currentEvent];
-    if ([event type] == NSKeyDown)
+    if ([event type] == NSEventTypeKeyDown)
 	{
 		NSString* characters = [event characters];
 		if ([characters length] > 0 && [characters characterAtIndex:0] == 0x0D)
@@ -163,7 +163,7 @@
 /*    NSRect windowFrame = [window frame];
     windowFrame.size.height += growing ? sizeChange.height : -sizeChange.height;
     windowFrame.origin.y -= growing ? sizeChange.height : -sizeChange.height;
-    [window setFrame:windowFrame display:YES animate:YES];
+    [window setFrame:windowFrame display:YES animate:YES];*/
     
     /* restore the autoresizing mask */
   //  [outlineScrollView setAutoresizingMask:oldOutlineViewMask];
@@ -193,7 +193,5 @@
 #pragma mark lifecycle methods
 -(void) dealloc {
 //    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSViewFrameDidChangeNotification object:_editor];
-    [_container release];
-    [super dealloc];
 }
 @end

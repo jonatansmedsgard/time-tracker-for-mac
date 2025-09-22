@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -27,13 +27,9 @@
 		2C4528B20909AAE5003C0369 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C4528B10909AAE5003C0369 /* IOKit.framework */; };
 		2C9DB948090675EB0039C62A /* addprojecttool.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C9DB944090675EB0039C62A /* addprojecttool.png */; };
 		2C9DB949090675EB0039C62A /* addtasktool.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C9DB945090675EB0039C62A /* addtasktool.png */; };
-		2C9DB94A090675EB0039C62A /* playtool.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C9DB946090675EB0039C62A /* playtool.png */; };
-		2C9DB94B090675EB0039C62A /* stoptool.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C9DB947090675EB0039C62A /* stoptool.png */; };
 		2C9DB974090677B20039C62A /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 2C9DB973090677B20039C62A /* Icon.icns */; };
 		2C9DD71B0905824F00AA5C6E /* playitem_hl.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C9DD7170905824F00AA5C6E /* playitem_hl.png */; };
-		2C9DD71C0905824F00AA5C6E /* playitem.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C9DD7180905824F00AA5C6E /* playitem.png */; };
 		2C9DD71D0905824F00AA5C6E /* stopitem_hl.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C9DD7190905824F00AA5C6E /* stopitem_hl.png */; };
-		2C9DD71E0905824F00AA5C6E /* stopitem.png in Resources */ = {isa = PBXBuildFile; fileRef = 2C9DD71A0905824F00AA5C6E /* stopitem.png */; };
 		2C9EC8D20905A5F2000651F2 /* TTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C9EC8D10905A5F2000651F2 /* TTask.m */; };
 		2C9EC8D70905A5FE000651F2 /* TProject.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C9EC8D60905A5FE000651F2 /* TProject.m */; };
 		2C9EC93F0905A9F6000651F2 /* TimeIntervalFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C9EC93E0905A9F6000651F2 /* TimeIntervalFormatter.m */; };
@@ -41,9 +37,15 @@
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		8EB34C732E7D3C2100342E09 /* UniformTypeIdentifiers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EB34C722E7D3C2100342E09 /* UniformTypeIdentifiers.framework */; };
+		8EB34C792E7D3D0D00342E09 /* stopiteminv.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 8EB34C772E7D3D0D00342E09 /* stopiteminv.tiff */; };
+		8EB34C7A2E7D3D0D00342E09 /* playiteminv.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 8EB34C752E7D3D0D00342E09 /* playiteminv.tiff */; };
+		8EB34C7B2E7D3D0D00342E09 /* stoptool.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 8EB34C782E7D3D0D00342E09 /* stoptool.tiff */; };
+		8EB34C7C2E7D3D0D00342E09 /* playitem.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 8EB34C742E7D3D0D00342E09 /* playitem.tiff */; };
+		8EB34C7D2E7D3D0D00342E09 /* playtool.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 8EB34C762E7D3D0D00342E09 /* playtool.tiff */; };
 		B19BDFBC0B5C953700465046 /* Time Tracker.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8D1107320486CEB800E47090 /* Time Tracker.app */; };
 		B1AB15830CEBC9A50025CF12 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1AB15820CEBC9A50025CF12 /* Sparkle.framework */; };
-		B1AB159D0CEBC9FC0025CF12 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B1AB15820CEBC9A50025CF12 /* Sparkle.framework */; };
+		B1AB159D0CEBC9FC0025CF12 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B1AB15820CEBC9A50025CF12 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		D546669810B76A1A001982C1 /* SearchQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = D546669710B76A1A001982C1 /* SearchQuery.m */; };
 		D546686E10B81E00001982C1 /* CaseInsensitivePredicateTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = D546686310B81E00001982C1 /* CaseInsensitivePredicateTemplate.m */; };
 		D546686F10B81E00001982C1 /* MainController.m in Sources */ = {isa = PBXBuildFile; fileRef = D546686510B81E00001982C1 /* MainController.m */; };
@@ -76,7 +78,7 @@
 		D5E58E450D243A21003020AA /* weektool.png in Resources */ = {isa = PBXBuildFile; fileRef = D5E58E3F0D243A21003020AA /* weektool.png */; };
 		D5E913AF123833D00044A9C4 /* TTaskMover.m in Sources */ = {isa = PBXBuildFile; fileRef = D5E913AE123833D00044A9C4 /* TTaskMover.m */; };
 		D5FEF87910BDD87900915321 /* BWToolkitFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5FEF87810BDD87900915321 /* BWToolkitFramework.framework */; };
-		D5FEF8D110BDDA2100915321 /* BWToolkitFramework.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = D5FEF87810BDD87900915321 /* BWToolkitFramework.framework */; };
+		D5FEF8D110BDDA2100915321 /* BWToolkitFramework.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = D5FEF87810BDD87900915321 /* BWToolkitFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -114,7 +116,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -124,13 +125,9 @@
 		2C4528B10909AAE5003C0369 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
 		2C9DB944090675EB0039C62A /* addprojecttool.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = addprojecttool.png; path = Graphics/addprojecttool.png; sourceTree = "<group>"; };
 		2C9DB945090675EB0039C62A /* addtasktool.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = addtasktool.png; path = Graphics/addtasktool.png; sourceTree = "<group>"; };
-		2C9DB946090675EB0039C62A /* playtool.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = playtool.png; path = Graphics/playtool.png; sourceTree = "<group>"; };
-		2C9DB947090675EB0039C62A /* stoptool.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = stoptool.png; path = Graphics/stoptool.png; sourceTree = "<group>"; };
 		2C9DB973090677B20039C62A /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
 		2C9DD7170905824F00AA5C6E /* playitem_hl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = playitem_hl.png; path = Graphics/playitem_hl.png; sourceTree = "<group>"; };
-		2C9DD7180905824F00AA5C6E /* playitem.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = playitem.png; path = Graphics/playitem.png; sourceTree = "<group>"; };
 		2C9DD7190905824F00AA5C6E /* stopitem_hl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = stopitem_hl.png; path = Graphics/stopitem_hl.png; sourceTree = "<group>"; };
-		2C9DD71A0905824F00AA5C6E /* stopitem.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = stopitem.png; path = Graphics/stopitem.png; sourceTree = "<group>"; };
 		2C9EC8D00905A5F2000651F2 /* TTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TTask.h; path = src/objc/TTask.h; sourceTree = "<group>"; };
 		2C9EC8D10905A5F2000651F2 /* TTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TTask.m; path = src/objc/TTask.m; sourceTree = "<group>"; };
 		2C9EC8D50905A5FE000651F2 /* TProject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TProject.h; path = src/objc/TProject.h; sourceTree = "<group>"; };
@@ -141,6 +138,17 @@
 		32CA4F630368D1EE00C91783 /* Time Tracker_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Time Tracker_Prefix.pch"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Time Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Time Tracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8E8A91AC2E7BE09700DDD5AA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		8E8A91AD2E7BE09800DDD5AA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/TaskEditor.xib; sourceTree = "<group>"; };
+		8E8A91AE2E7BE09D00DDD5AA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		8E8A91AF2E7BE09F00DDD5AA /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		8E8A91B02E7BE0A000DDD5AA /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/TaskEditor.xib; sourceTree = "<group>"; };
+		8EB34C722E7D3C2100342E09 /* UniformTypeIdentifiers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UniformTypeIdentifiers.framework; path = System/Library/Frameworks/UniformTypeIdentifiers.framework; sourceTree = SDKROOT; };
+		8EB34C742E7D3D0D00342E09 /* playitem.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = playitem.tiff; path = Graphics/playitem.tiff; sourceTree = "<group>"; };
+		8EB34C752E7D3D0D00342E09 /* playiteminv.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = playiteminv.tiff; path = Graphics/playiteminv.tiff; sourceTree = "<group>"; };
+		8EB34C762E7D3D0D00342E09 /* playtool.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = playtool.tiff; path = Graphics/playtool.tiff; sourceTree = "<group>"; };
+		8EB34C772E7D3D0D00342E09 /* stopiteminv.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = stopiteminv.tiff; path = Graphics/stopiteminv.tiff; sourceTree = "<group>"; };
+		8EB34C782E7D3D0D00342E09 /* stoptool.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = stoptool.tiff; path = Graphics/stoptool.tiff; sourceTree = "<group>"; };
 		B163D4040B646239007D0E2C /* AUTHORS.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AUTHORS.txt; sourceTree = "<group>"; };
 		B163D4050B646239007D0E2C /* LICENSE-GPL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "LICENSE-GPL.txt"; sourceTree = "<group>"; };
 		B19BDFC10B5C956700465046 /* ChangeLog.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ChangeLog.txt; sourceTree = SOURCE_ROOT; };
@@ -148,9 +156,7 @@
 		B1AB15820CEBC9A50025CF12 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		D5235F3712382604005D0C38 /* cs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = cs; path = cs.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		D5235F3812382610005D0C38 /* cs */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = cs; path = cs.lproj/TaskEditor.xib; sourceTree = "<group>"; };
-		D5235F391238261F005D0C38 /* cs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		D5351418128404100033CE36 /* German */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = German; path = German.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		D53514191284041B0033CE36 /* German */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = German; path = German.lproj/TaskEditor.xib; sourceTree = "<group>"; };
+		D5235F391238261F005D0C38 /* cs */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D546669610B76A1A001982C1 /* SearchQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchQuery.h; path = src/objc/SearchQuery.h; sourceTree = "<group>"; };
 		D546669710B76A1A001982C1 /* SearchQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchQuery.m; path = src/objc/SearchQuery.m; sourceTree = "<group>"; };
 		D546686210B81E00001982C1 /* CaseInsensitivePredicateTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaseInsensitivePredicateTemplate.h; sourceTree = "<group>"; };
@@ -181,7 +187,6 @@
 		D588FB9011B1C93300D7A8B0 /* TTaskNameTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTaskNameTransformer.m; sourceTree = "<group>"; };
 		D58EEB640D09D2830043384C /* TWorkPeriod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TWorkPeriod.h; path = src/objc/TWorkPeriod.h; sourceTree = "<group>"; };
 		D59DC2090CFF63CA000F08A8 /* TDateTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDateTransformer.h; path = src/objc/TDateTransformer.h; sourceTree = "<group>"; };
-		D5A7616E10C1C24A004B88C7 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		D5A871240E6E6B1C00F41819 /* IProject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IProject.h; path = src/objc/IProject.h; sourceTree = "<group>"; };
 		D5A871400E6E783500F41819 /* TDateTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDateTransformer.m; path = src/objc/TDateTransformer.m; sourceTree = "<group>"; };
 		D5AED85410C5AD8600AB1EE0 /* TTTimeProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TTTimeProvider.h; path = src/objc/TTTimeProvider.h; sourceTree = "<group>"; };
@@ -193,7 +198,6 @@
 		D5C9939B11636AFB00AFCE6E /* ChangeLog.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ChangeLog.yml; sourceTree = "<group>"; };
 		D5CB9CF811E2054400E3283E /* TaskEditorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TaskEditorController.h; sourceTree = "<group>"; };
 		D5CB9CF911E2054400E3283E /* TaskEditorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TaskEditorController.m; sourceTree = "<group>"; };
-		D5CB9CFF11E2055D00E3283E /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/TaskEditor.xib; sourceTree = "<group>"; };
 		D5D3175312382E17003A416A /* RSRTVArrayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSRTVArrayController.h; sourceTree = "<group>"; };
 		D5D3175412382E17003A416A /* RSRTVArrayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSRTVArrayController.m; sourceTree = "<group>"; };
 		D5E58E3A0D243A21003020AA /* dayofftool.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dayofftool.png; path = Graphics/dayofftool.png; sourceTree = "<group>"; };
@@ -212,6 +216,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8EB34C732E7D3C2100342E09 /* UniformTypeIdentifiers.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				2C4528A70909AACB003C0369 /* Carbon.framework in Frameworks */,
 				2C4528B20909AAE5003C0369 /* IOKit.framework in Frameworks */,
@@ -293,6 +298,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8EB34C722E7D3C2100342E09 /* UniformTypeIdentifiers.framework */,
 				B1AB15820CEBC9A50025CF12 /* Sparkle.framework */,
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
@@ -310,15 +316,16 @@
 				D5E58E3C0D243A21003020AA /* monthofftool.png */,
 				D5E58E3D0D243A21003020AA /* monthtool.png */,
 				D5E58E3E0D243A21003020AA /* weekofftool.png */,
+				8EB34C742E7D3D0D00342E09 /* playitem.tiff */,
+				8EB34C752E7D3D0D00342E09 /* playiteminv.tiff */,
+				8EB34C762E7D3D0D00342E09 /* playtool.tiff */,
+				8EB34C772E7D3D0D00342E09 /* stopiteminv.tiff */,
+				8EB34C782E7D3D0D00342E09 /* stoptool.tiff */,
 				D5E58E3F0D243A21003020AA /* weektool.png */,
 				2C9DB944090675EB0039C62A /* addprojecttool.png */,
 				2C9DB945090675EB0039C62A /* addtasktool.png */,
-				2C9DB946090675EB0039C62A /* playtool.png */,
-				2C9DB947090675EB0039C62A /* stoptool.png */,
 				2C9DD7170905824F00AA5C6E /* playitem_hl.png */,
-				2C9DD7180905824F00AA5C6E /* playitem.png */,
 				2C9DD7190905824F00AA5C6E /* stopitem_hl.png */,
-				2C9DD71A0905824F00AA5C6E /* stopitem.png */,
 			);
 			name = Graphics;
 			sourceTree = "<group>";
@@ -432,14 +439,19 @@
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 2600;
+			};
 			buildConfigurationList = 2CFAEE2509042EE900131DD6 /* Build configuration list for PBXProject "Time Tracker" */;
 			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = en;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				en,
-				English,
 				cs,
-				German,
+				Base,
+				de,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* Time Tracker */;
 			projectDirPath = "";
@@ -458,15 +470,16 @@
 			files = (
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				2C9DD71B0905824F00AA5C6E /* playitem_hl.png in Resources */,
-				2C9DD71C0905824F00AA5C6E /* playitem.png in Resources */,
 				2C9DD71D0905824F00AA5C6E /* stopitem_hl.png in Resources */,
-				2C9DD71E0905824F00AA5C6E /* stopitem.png in Resources */,
 				2C9DB948090675EB0039C62A /* addprojecttool.png in Resources */,
 				2C9DB949090675EB0039C62A /* addtasktool.png in Resources */,
-				2C9DB94A090675EB0039C62A /* playtool.png in Resources */,
-				2C9DB94B090675EB0039C62A /* stoptool.png in Resources */,
 				2C9DB974090677B20039C62A /* Icon.icns in Resources */,
 				D5E58E400D243A21003020AA /* dayofftool.png in Resources */,
+				8EB34C792E7D3D0D00342E09 /* stopiteminv.tiff in Resources */,
+				8EB34C7A2E7D3D0D00342E09 /* playiteminv.tiff in Resources */,
+				8EB34C7B2E7D3D0D00342E09 /* stoptool.tiff in Resources */,
+				8EB34C7C2E7D3D0D00342E09 /* playitem.tiff in Resources */,
+				8EB34C7D2E7D3D0D00342E09 /* playtool.tiff in Resources */,
 				D5E58E410D243A21003020AA /* daytool.png in Resources */,
 				D5E58E420D243A21003020AA /* monthofftool.png in Resources */,
 				D5E58E430D243A21003020AA /* monthtool.png in Resources */,
@@ -545,8 +558,8 @@
 		089C165CFE840E0CC02AAC07 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				089C165DFE840E0CC02AAC07 /* English */,
 				D5235F391238261F005D0C38 /* cs */,
+				8E8A91AE2E7BE09D00DDD5AA /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -554,9 +567,9 @@
 		D5A7616D10C1C24A004B88C7 /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				D5A7616E10C1C24A004B88C7 /* English */,
 				D5235F3712382604005D0C38 /* cs */,
-				D5351418128404100033CE36 /* German */,
+				8E8A91AC2E7BE09700DDD5AA /* Base */,
+				8E8A91AF2E7BE09F00DDD5AA /* de */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -564,9 +577,9 @@
 		D5CB9CFE11E2055D00E3283E /* TaskEditor.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				D5CB9CFF11E2055D00E3283E /* English */,
 				D5235F3812382610005D0C38 /* cs */,
-				D53514191284041B0033CE36 /* German */,
+				8E8A91AD2E7BE09800DDD5AA /* Base */,
+				8E8A91B02E7BE0A000DDD5AA /* de */,
 			);
 			name = TaskEditor.xib;
 			sourceTree = "<group>";
@@ -577,10 +590,15 @@
 		2CFAEE2209042EE900131DD6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = "";
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				BUNDLE_IDENTIFIER = com.slooz.timetracker;
+				CLANG_ANALYZER_OBJC_RETAIN_COUNT = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1.3.13;
+				DEAD_CODE_STRIPPING = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
@@ -590,7 +608,6 @@
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -599,9 +616,11 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				PREBINDING = NO;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "${BUNDLE_IDENTIFIER}";
 				PRODUCT_NAME = "Time Tracker";
-				VALID_ARCHS = "x86_64 i386 ppc";
+				SDKROOT = macosx;
+				VALID_ARCHS = x86_64;
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = YES;
 			};
@@ -610,10 +629,15 @@
 		2CFAEE2309042EE900131DD6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = "";
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				BUNDLE_IDENTIFIER = com.slooz.timetracker;
+				CLANG_ANALYZER_OBJC_RETAIN_COUNT = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = YES;
 				CURRENT_PROJECT_VERSION = 1.3.13;
+				DEAD_CODE_STRIPPING = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
@@ -622,7 +646,6 @@
 					"\"$(SRCROOT)/BWToolkit.ibplugin/Contents/Frameworks\"",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Time Tracker_Prefix.pch";
@@ -630,10 +653,11 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				PREBINDING = NO;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "${BUNDLE_IDENTIFIER}";
 				PRODUCT_NAME = "Time Tracker";
-				SDKROOT = macosx10.5;
-				VALID_ARCHS = "x86_64 i386 ppc";
+				SDKROOT = macosx;
+				VALID_ARCHS = x86_64;
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
 			};
@@ -642,9 +666,14 @@
 		2CFAEE2409042EE900131DD6 /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = "";
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				BUNDLE_IDENTIFIER = com.slooz.timetracker;
+				CLANG_ANALYZER_OBJC_RETAIN_COUNT = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CURRENT_PROJECT_VERSION = 1.3.13;
+				DEAD_CODE_STRIPPING = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
@@ -660,8 +689,11 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "${BUNDLE_IDENTIFIER}";
 				PRODUCT_NAME = "Time Tracker";
-				VALID_ARCHS = "x86_64 i386 ppc";
+				SDKROOT = macosx;
+				VALID_ARCHS = x86_64;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Default;
@@ -669,12 +701,42 @@
 		2CFAEE2609042EE900131DD6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CURRENT_PROJECT_VERSION = 1.3.13;
-				GCC_ENABLE_OBJC_GC = unsupported;
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				DEAD_CODE_STRIPPING = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = YES;
 				RUN_CLANG_STATIC_ANALYZER = YES;
-				SDKROOT = macosx10.5;
+				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				VALID_ARCHS = "x86_64 i386 ppc";
 				ZERO_LINK = YES;
 			};
@@ -683,12 +745,40 @@
 		2CFAEE2709042EE900131DD6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CURRENT_PROJECT_VERSION = 1.3.13;
-				GCC_ENABLE_OBJC_GC = unsupported;
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				DEAD_CODE_STRIPPING = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				RUN_CLANG_STATIC_ANALYZER = YES;
-				SDKROOT = macosx10.5;
+				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				VALID_ARCHS = "x86_64 i386 ppc";
 			};
 			name = Release;
@@ -696,12 +786,40 @@
 		2CFAEE2809042EE900131DD6 /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CURRENT_PROJECT_VERSION = 1.3.13;
-				GCC_ENABLE_OBJC_GC = unsupported;
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				DEAD_CODE_STRIPPING = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				RUN_CLANG_STATIC_ANALYZER = YES;
-				SDKROOT = macosx10.5;
+				SDKROOT = macosx;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				VALID_ARCHS = "x86_64 i386 ppc";
 			};
 			name = Default;
@@ -709,10 +827,13 @@
 		B19BDFBE0B5C955500465046 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				PRODUCT_NAME = "Release Package";
 			};
 			name = Debug;
@@ -720,9 +841,11 @@
 		B19BDFBF0B5C955500465046 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				COPY_PHASE_STRIP = YES;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				DEAD_CODE_STRIPPING = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				PRODUCT_NAME = "Release Package";
 				ZERO_LINK = NO;
 			};
@@ -731,6 +854,9 @@
 		B19BDFC00B5C955500465046 /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				DEAD_CODE_STRIPPING = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				PRODUCT_NAME = "Release Package";
 			};
 			name = Default;
