@@ -7,18 +7,14 @@
 
 #import "TTPredicateEditorViewController.h"
 #import "SearchQuery.h"
-#import <BWToolkitFramework/BWSplitView.h>
 @implementation TTPredicateEditorViewController
 
 @synthesize delegate = _delegate;
 @synthesize predicateValid = _predicateValid;
 
 -(void)updateEditorFrame {
-    BWSplitView *split = (BWSplitView*) _container.superview;
-    BOOL collapsed = [split collapsibleSubviewCollapsed];
-    if (collapsed) {
-        return;
-    }
+    NSSplitView *split = (NSSplitView*) _container.superview;
+
     NSInteger editorHeight = [_editor numberOfRows] * [_editor rowHeight];
     
     NSLog(@"Have notification height: %ld",(long)editorHeight);
@@ -116,11 +112,6 @@
     if ([_editor numberOfRows] == 0) {
         if (self.predicateValid) {
             [_editor addRow:self];            
-        } else {
-            BWSplitView *split = (BWSplitView*) _container.superview;
-            if (!split.collapsibleSubviewCollapsed) {
-                [split toggleCollapse:split.toggleCollapseButton];
-            }
         }
     }
     
