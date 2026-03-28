@@ -547,6 +547,14 @@
 
 - (void)awakeFromNib
 {
+    mainWindow.titlebarAppearsTransparent = YES;
+    mainWindow.titleVisibility = NSWindowTitleHidden;
+    mainWindow.styleMask |= NSWindowStyleMaskFullSizeContentView;
+    
+    if (@available(macOS 11.0, *)) {
+        mainWindow.toolbarStyle = NSWindowToolbarStyleUnified;
+    }
+    
 	statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength];
 	
     //[statusItem ]
@@ -2094,5 +2102,6 @@
 -(void) dealloc {
 	self.currentFilterCreationDate = nil;
 }
+
 
 @end

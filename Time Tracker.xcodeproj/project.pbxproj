@@ -40,6 +40,9 @@
 		8E4EEEFF2E819A6600A5B8A8 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8E4EEEFE2E819A6600A5B8A8 /* Sparkle.framework */; };
 		8E4EEF012E819A9600A5B8A8 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E4EEEFE2E819A6600A5B8A8 /* Sparkle.framework */; };
 		8E4EEF022E819A9600A5B8A8 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8E4EEEFE2E819A6600A5B8A8 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8E9F05C62F5CB96B00211EA9 /* TTSplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9F05C52F5CB96B00211EA9 /* TTSplitViewController.m */; };
+		8E9F05C72F5CB96B00211EA9 /* TTSplitViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8E9F05C42F5CB96B00211EA9 /* TTSplitViewController.h */; };
+		8E9F05C82F5CB96B00211EA9 /* TTSplitViewController.m in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8E9F05C52F5CB96B00211EA9 /* TTSplitViewController.m */; };
 		8EB34C732E7D3C2100342E09 /* UniformTypeIdentifiers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EB34C722E7D3C2100342E09 /* UniformTypeIdentifiers.framework */; };
 		8EB34C792E7D3D0D00342E09 /* stopiteminv.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 8EB34C772E7D3D0D00342E09 /* stopiteminv.tiff */; };
 		8EB34C7A2E7D3D0D00342E09 /* playiteminv.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 8EB34C752E7D3D0D00342E09 /* playiteminv.tiff */; };
@@ -97,6 +100,8 @@
 			dstSubfolder = Product;
 			files = (
 				B19BDFBC0B5C953700465046 /* Time Tracker.app in CopyFiles */,
+				8E9F05C72F5CB96B00211EA9 /* TTSplitViewController.h in CopyFiles */,
+				8E9F05C82F5CB96B00211EA9 /* TTSplitViewController.m in CopyFiles */,
 				8E4EEEFF2E819A6600A5B8A8 /* Sparkle.framework in CopyFiles */,
 			);
 		};
@@ -139,6 +144,8 @@
 		8E8A91AE2E7BE09D00DDD5AA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8E8A91AF2E7BE09F00DDD5AA /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		8E8A91B02E7BE0A000DDD5AA /* de */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = de; path = de.lproj/TaskEditor.xib; sourceTree = "<group>"; };
+		8E9F05C42F5CB96B00211EA9 /* TTSplitViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TTSplitViewController.h; sourceTree = "<group>"; };
+		8E9F05C52F5CB96B00211EA9 /* TTSplitViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TTSplitViewController.m; sourceTree = "<group>"; };
 		8EB34C722E7D3C2100342E09 /* UniformTypeIdentifiers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UniformTypeIdentifiers.framework; path = System/Library/Frameworks/UniformTypeIdentifiers.framework; sourceTree = SDKROOT; };
 		8EB34C742E7D3D0D00342E09 /* playitem.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = playitem.tiff; path = Graphics/playitem.tiff; sourceTree = "<group>"; };
 		8EB34C752E7D3D0D00342E09 /* playiteminv.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = playiteminv.tiff; path = Graphics/playiteminv.tiff; sourceTree = "<group>"; };
@@ -361,6 +368,8 @@
 				D588FB9011B1C93300D7A8B0 /* TTaskNameTransformer.m */,
 				D5E913AD123833D00044A9C4 /* TTaskMover.h */,
 				D5E913AE123833D00044A9C4 /* TTaskMover.m */,
+				8E9F05C42F5CB96B00211EA9 /* TTSplitViewController.h */,
+				8E9F05C52F5CB96B00211EA9 /* TTSplitViewController.m */,
 			);
 			name = cocoa;
 			path = src/cocoa;
@@ -506,6 +515,7 @@
 				2C9EC8D20905A5F2000651F2 /* TTask.m in Sources */,
 				2C9EC8D70905A5FE000651F2 /* TProject.m in Sources */,
 				2C9EC93F0905A9F6000651F2 /* TimeIntervalFormatter.m in Sources */,
+				8E9F05C62F5CB96B00211EA9 /* TTSplitViewController.m in Sources */,
 				2C9EC9540905ABAE000651F2 /* TWorkPeriod.m in Sources */,
 				D581A8140CFF3BBA006A0DC1 /* TMetaProject.m in Sources */,
 				D581A8150CFF3BBA006A0DC1 /* TMetaTask.m in Sources */,
